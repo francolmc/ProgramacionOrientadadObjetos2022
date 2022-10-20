@@ -3,7 +3,7 @@ class ConnectionDB:
         self.port = port
         self.server = server
         self.user = user
-        self.passwor = password
+        self.password = password
         self.database = database
 
     def openConnection(self) -> None: 
