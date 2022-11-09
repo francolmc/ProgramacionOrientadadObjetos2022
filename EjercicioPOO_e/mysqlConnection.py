@@ -4,10 +4,10 @@ from mysql.connector import errorcode
 
 class MySQLConnection:
     def __init__(self, host: str, port: int, user: str, pwd: str, database: str) -> None:
-        self._host = host,
-        self._port = port,
-        self._user = user,
-        self._password = pwd,
+        self._host = host
+        self._port = port
+        self._user = user
+        self._password = pwd
         self._database = database
         self._connection = None
         self._cursor = None
@@ -15,11 +15,11 @@ class MySQLConnection:
     def connect(self):
         try:
             self._connection = mysql.connector.connect( # Crear conexion
-                host = 'localhost',
-                port = 3306,
-                user = 'root',
-                password = 'masterdba',
-                database = 'pruebas_poo '
+                host = self._host,
+                port = self._port,
+                user = self._user,
+                password = self._password,
+                database = self._database
             )
             self._cursor = self._connection.cursor()
         except mysql.connector.Error as err: # manejo de excepcion al conectarnos con la base de datos
