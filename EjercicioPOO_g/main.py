@@ -22,6 +22,25 @@ def agregarRegistro():
     connection.close()
 
 def editarRegistro():
+    # Buscar registro unico por nombre
+    product = Product()
+    product.setProductName(input('Nombre producto a editar: '))
+    connection.connect()
+    result = connection.getOneRecord(product.selectOneRecordByNameSQL())
+    # Construir objeto producto con los valores de la tabla
+    product.setId(result[0])
+    product.setProductName(result[1])
+    product.setPrice(result[2])
+    # Solicitar al usuario los nuevos valores del producto
+    productName = input(f'Nombre ({product.getProductName()}): ')
+    price = input(f'Precio ({product.getPrice()}): ')
+    if productName != '':
+        product.setProductName(productName)
+    if price != '':
+        product.setPrice(price)
+    # Guardar el objeto con los nuevos valores en la tabla
+    connection.executeQuery(product.updateSQL())
+    connection.close()
     print('Editar registro')
 
 def eliminarRegistro():

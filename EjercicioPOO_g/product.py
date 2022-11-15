@@ -9,6 +9,9 @@ class Product:
     def getId(self) -> int:
         return self._id
 
+    def setId(self, value: int):
+        self._id = value
+
     def getProductName(self) -> str:
         return self._productName
 
@@ -31,10 +34,13 @@ class Product:
         return f"INSERT INTO product (productName, price) VALUES ('{self._productName}', '{self._price}')"
 
     def updateSQL(self):
-        return f"UPDATE product SET productName='{self._productName}', price='{self._price}' WHERE"
+        return f"UPDATE product SET productName='{self._productName}', price='{self._price}' WHERE id = {self._id}"
 
     def deleteSQL(self):
         return f"DELETE FROM product WHERE id={self._id}"
 
     def selectOneRecordSQL(self, id: int):
         return f"SELECT id, productName, price, createdAt, updatedAt FROM product WHERE id = '{id}'"
+
+    def selectOneRecordByNameSQL(self):
+        return f"SELECT id, productName, price, createdAt, updatedAt FROM product WHERE productName = '{self._productName}'"
