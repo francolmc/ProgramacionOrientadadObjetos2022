@@ -27,24 +27,37 @@ def editarRegistro():
     product.setProductName(input('Nombre producto a editar: '))
     connection.connect()
     result = connection.getOneRecord(product.selectOneRecordByNameSQL())
-    # Construir objeto producto con los valores de la tabla
-    product.setId(result[0])
-    product.setProductName(result[1])
-    product.setPrice(result[2])
-    # Solicitar al usuario los nuevos valores del producto
-    productName = input(f'Nombre ({product.getProductName()}): ')
-    price = input(f'Precio ({product.getPrice()}): ')
-    if productName != '':
-        product.setProductName(productName)
-    if price != '':
-        product.setPrice(price)
-    # Guardar el objeto con los nuevos valores en la tabla
-    connection.executeQuery(product.updateSQL())
-    connection.close()
-    print('Editar registro')
+    if result == None:
+        print('El registro no existe')
+    else:
+        # Construir objeto producto con los valores de la tabla
+        product.setId(result[0])
+        product.setProductName(result[1])
+        product.setPrice(result[2])
+        # Solicitar al usuario los nuevos valores del producto
+        productName = input(f'Nombre ({product.getProductName()}): ')
+        price = input(f'Precio ({product.getPrice()}): ')
+        if productName != '':
+            product.setProductName(productName)
+        if price != '':
+            product.setPrice(price)
+        # Guardar el objeto con los nuevos valores en la tabla
+        connection.executeQuery(product.updateSQL())
+        connection.close()
 
 def eliminarRegistro():
-    print('Eliminar registro')
+    # Buscar registro unico por nombre
+    product = Product()
+    product.setProductName(input('Nombre producto a eliminar: '))
+    connection.connect()
+    result = connection.getOneRecord(product.selectOneRecordByNameSQL())
+    if result == None:
+        print('El registro no existe')
+    else:
+        product.setId(result[0])
+        # Eliminar el registro de la tabla
+        connection.executeQuery(product.deleteSQL())
+        connection.close()
 
 # programa principal con ciclo para mostrar el menu hasta que el usuario salga
 option = 0
