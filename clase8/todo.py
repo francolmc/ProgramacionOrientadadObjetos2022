@@ -1,5 +1,3 @@
-import json
-
 class TODOClass:
     def __init__(self, id: int = 0, todo: str = '', completed: str = False) -> None:
         self.__id = id
